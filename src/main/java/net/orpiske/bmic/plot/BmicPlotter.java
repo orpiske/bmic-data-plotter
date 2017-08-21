@@ -72,24 +72,35 @@ public class BmicPlotter {
     }
 
 
-    private void plotQueueSize(List<Date> xData, List<Integer> yData) throws IOException {
+    private void plotQueueData(BmicData bmicData) throws IOException {
         // Create Chart
         XYChart chart = buildCommonChart("Queue Size", "Number of messages");
 
         // Series
-        XYSeries series = chart.addSeries("Queue Size", xData, yData);
+        XYSeries queueSeries = chart.addSeries("Queue Size", bmicData.getTimestamps(),
+                bmicData.getQueueSizes());
 
-        series.setLineColor(XChartSeriesColors.BLUE);
-        series.setMarkerColor(Color.LIGHT_GRAY);
-        series.setMarker(SeriesMarkers.DIAMOND);
-        series.setLineStyle(SeriesLines.SOLID);
+        queueSeries.setLineColor(XChartSeriesColors.BLUE);
+        queueSeries.setMarkerColor(Color.LIGHT_GRAY);
+        queueSeries.setMarker(SeriesMarkers.DIAMOND);
+        queueSeries.setLineStyle(SeriesLines.SOLID);
 
-        BitmapEncoder.saveBitmap(chart, baseName + "_queue_size.png", BitmapEncoder.BitmapFormat.PNG);
+
+        XYSeries expSeries = chart.addSeries("Expired Messages", bmicData.getTimestamps(),
+                bmicData.getExp());
+
+        expSeries.setLineColor(XChartSeriesColors.GREEN);
+        expSeries.setMarkerColor(Color.LIGHT_GRAY);
+        expSeries.setMarker(SeriesMarkers.CIRCLE);
+        expSeries.setLineStyle(SeriesLines.SOLID);
+
+        BitmapEncoder.saveBitmap(chart, baseName + "_queue_data.png", BitmapEncoder.BitmapFormat.PNG);
     }
+
 
     private void plotEdenMemory(BmicData bmicData) throws IOException {
         // Create Chart
-        XYChart chart = buildCommonChart("Eden Memory", "Memory");
+        XYChart chart = buildCommonChart("Eden Memory", "Memory (Megabytes)");
 
         // Series
         XYSeries edenUsedSeries = chart.addSeries("Eden Used", bmicData.getTimestamps(), bmicData.getEdenUsed());
@@ -110,10 +121,132 @@ public class BmicPlotter {
         BitmapEncoder.saveBitmap(chart, baseName + "_eden_memory.png", BitmapEncoder.BitmapFormat.PNG);
     }
 
+    private void plotOSMemory(BmicData bmicData) throws IOException {
+        // Create Chart
+        XYChart chart = buildCommonChart("OS Memory", "Memory (Megabytes)");
+
+        // Series
+        XYSeries edenUsedSeries = chart.addSeries("Free Memory", bmicData.getTimestamps(),
+                bmicData.getFreeMems());
+
+        edenUsedSeries.setLineColor(XChartSeriesColors.BLUE);
+        edenUsedSeries.setMarkerColor(Color.LIGHT_GRAY);
+        edenUsedSeries.setMarker(SeriesMarkers.DIAMOND);
+        edenUsedSeries.setLineStyle(SeriesLines.SOLID);
+
+        XYSeries edenCommitted = chart.addSeries("Free Swap", bmicData.getTimestamps(),
+                bmicData.getSwapFrees());
+
+        edenCommitted.setLineColor(XChartSeriesColors.GREEN);
+        edenCommitted.setMarkerColor(Color.LIGHT_GRAY);
+        edenCommitted.setMarker(SeriesMarkers.DIAMOND);
+        edenCommitted.setLineStyle(SeriesLines.SOLID);
+
+        BitmapEncoder.saveBitmap(chart, baseName + "_memory.png", BitmapEncoder.BitmapFormat.PNG);
+    }
+
+
+    private void plotSurvivorMemory(BmicData bmicData) throws IOException {
+        // Create Chart
+        XYChart chart = buildCommonChart("Survivor Memory", "Memory (Megabytes)");
+
+        // Series
+        XYSeries edenUsedSeries = chart.addSeries("Survivor Used", bmicData.getTimestamps(), bmicData.getSurvivorUsed());
+
+        edenUsedSeries.setLineColor(XChartSeriesColors.BLUE);
+        edenUsedSeries.setMarkerColor(Color.LIGHT_GRAY);
+        edenUsedSeries.setMarker(SeriesMarkers.DIAMOND);
+        edenUsedSeries.setLineStyle(SeriesLines.SOLID);
+
+        XYSeries edenCommitted = chart.addSeries("Survivor Committed", bmicData.getTimestamps(),
+                bmicData.getSurvivorCommitted());
+
+        edenCommitted.setLineColor(XChartSeriesColors.GREEN);
+        edenCommitted.setMarkerColor(Color.LIGHT_GRAY);
+        edenCommitted.setMarker(SeriesMarkers.DIAMOND);
+        edenCommitted.setLineStyle(SeriesLines.SOLID);
+
+        BitmapEncoder.saveBitmap(chart, baseName + "_survivor_memory.png", BitmapEncoder.BitmapFormat.PNG);
+    }
+
+    private void plotTenuredMemory(BmicData bmicData) throws IOException {
+        // Create Chart
+        XYChart chart = buildCommonChart("Tenured Memory", "Memory (Megabytes)");
+
+        // Series
+        XYSeries edenUsedSeries = chart.addSeries("Tenured Used", bmicData.getTimestamps(), bmicData.getTenuredUsed());
+
+        edenUsedSeries.setLineColor(XChartSeriesColors.BLUE);
+        edenUsedSeries.setMarkerColor(Color.LIGHT_GRAY);
+        edenUsedSeries.setMarker(SeriesMarkers.DIAMOND);
+        edenUsedSeries.setLineStyle(SeriesLines.SOLID);
+
+        XYSeries edenCommitted = chart.addSeries("Tenured Committed", bmicData.getTimestamps(),
+                bmicData.getTenuredCommitted());
+
+        edenCommitted.setLineColor(XChartSeriesColors.GREEN);
+        edenCommitted.setMarkerColor(Color.LIGHT_GRAY);
+        edenCommitted.setMarker(SeriesMarkers.DIAMOND);
+        edenCommitted.setLineStyle(SeriesLines.SOLID);
+
+        BitmapEncoder.saveBitmap(chart, baseName + "_tenured_memory.png", BitmapEncoder.BitmapFormat.PNG);
+    }
+
+    private void plotPMMemory(BmicData bmicData) throws IOException {
+        // Create Chart
+        XYChart chart = buildCommonChart("PermGen/Metaspace Memory", "Memory (Megabytes)");
+
+        // Series
+        XYSeries edenUsedSeries = chart.addSeries("PermGen/Metaspace Used", bmicData.getTimestamps(),
+                bmicData.getPmUsed());
+
+        edenUsedSeries.setLineColor(XChartSeriesColors.BLUE);
+        edenUsedSeries.setMarkerColor(Color.LIGHT_GRAY);
+        edenUsedSeries.setMarker(SeriesMarkers.DIAMOND);
+        edenUsedSeries.setLineStyle(SeriesLines.SOLID);
+
+        XYSeries edenCommitted = chart.addSeries("PermGen/Metaspace Committed", bmicData.getTimestamps(),
+                bmicData.getPmCommitted());
+
+        edenCommitted.setLineColor(XChartSeriesColors.GREEN);
+        edenCommitted.setMarkerColor(Color.LIGHT_GRAY);
+        edenCommitted.setMarker(SeriesMarkers.DIAMOND);
+        edenCommitted.setLineStyle(SeriesLines.SOLID);
+
+        BitmapEncoder.saveBitmap(chart, baseName + "_pm_memory.png", BitmapEncoder.BitmapFormat.PNG);
+    }
+
+    private void plotFileDescriptor(BmicData bmicData) throws IOException {
+        // Create Chart
+        XYChart chart = buildCommonChart("File Descriptors", "Count");
+
+        // Series
+        XYSeries edenUsedSeries = chart.addSeries("Open File Descriptors", bmicData.getTimestamps(),
+                bmicData.getOpenFds());
+
+        edenUsedSeries.setLineColor(XChartSeriesColors.BLUE);
+        edenUsedSeries.setMarkerColor(Color.LIGHT_GRAY);
+        edenUsedSeries.setMarker(SeriesMarkers.DIAMOND);
+        edenUsedSeries.setLineStyle(SeriesLines.SOLID);
+
+        XYSeries edenCommitted = chart.addSeries("Free File Descriptors", bmicData.getTimestamps(),
+                bmicData.getFreeFds());
+
+        edenCommitted.setLineColor(XChartSeriesColors.GREEN);
+        edenCommitted.setMarkerColor(Color.LIGHT_GRAY);
+        edenCommitted.setMarker(SeriesMarkers.DIAMOND);
+        edenCommitted.setLineStyle(SeriesLines.SOLID);
+
+        BitmapEncoder.saveBitmap(chart, baseName + "_descriptors.png", BitmapEncoder.BitmapFormat.PNG);
+    }
 
     public void plot(BmicData bmicData) throws IOException {
-        plotQueueSize(bmicData.getTimestamps(), bmicData.getQueueSizes());
+        plotQueueData(bmicData);
+        plotOSMemory(bmicData);
         plotEdenMemory(bmicData);
+        plotSurvivorMemory(bmicData);
+        plotTenuredMemory(bmicData);
+        plotPMMemory(bmicData);
     }
 
     public void setOutputWidth(int outputWidth) {
