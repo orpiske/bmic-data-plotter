@@ -16,6 +16,7 @@
 
 package net.orpiske.bmic.plot;
 
+import net.orpiske.bmic.plot.exceptions.BmicEmptyDataSet;
 import org.knowm.xchart.BitmapEncoder;
 import org.knowm.xchart.XYChart;
 import org.knowm.xchart.XYChartBuilder;
@@ -40,6 +41,17 @@ public class BmicPlotter {
 
     public BmicPlotter(final String baseName) {
         this.baseName = baseName;
+    }
+
+    private void validateDataSet(List<?> xData, List<?> yData) throws BmicEmptyDataSet {
+        if (xData == null || xData.size() == 0) {
+            throw new BmicEmptyDataSet("The 'X' column data set is empty");
+        }
+
+        if (yData == null || yData.size() == 0) {
+            throw new BmicEmptyDataSet("The 'Y' column data set is empty");
+        }
+
     }
 
     private XYChart buildCommonChart(String title, String yTitle) {
@@ -72,9 +84,11 @@ public class BmicPlotter {
     }
 
 
-    private void plotQueueData(BmicData bmicData) throws IOException {
+    private void plotQueueData(BmicData bmicData) throws IOException, BmicEmptyDataSet {
         // Create Chart
         XYChart chart = buildCommonChart("Queue Size", "Number of messages");
+
+        validateDataSet(bmicData.getTimestamps(), bmicData.getQueueSizes());
 
         // Series
         XYSeries queueSeries = chart.addSeries("Queue Size", bmicData.getTimestamps(),
@@ -85,6 +99,7 @@ public class BmicPlotter {
         queueSeries.setMarker(SeriesMarkers.DIAMOND);
         queueSeries.setLineStyle(SeriesLines.SOLID);
 
+        validateDataSet(bmicData.getTimestamps(), bmicData.getExp());
 
         XYSeries expSeries = chart.addSeries("Expired Messages", bmicData.getTimestamps(),
                 bmicData.getExp());
@@ -98,17 +113,22 @@ public class BmicPlotter {
     }
 
 
-    private void plotEdenMemory(BmicData bmicData) throws IOException {
+    private void plotEdenMemory(BmicData bmicData) throws IOException, BmicEmptyDataSet {
         // Create Chart
         XYChart chart = buildCommonChart("Eden Memory", "Memory (Megabytes)");
 
+        validateDataSet(bmicData.getTimestamps(), bmicData.getEdenUsed());
+
         // Series
-        XYSeries edenUsedSeries = chart.addSeries("Eden Used", bmicData.getTimestamps(), bmicData.getEdenUsed());
+        XYSeries edenUsedSeries = chart.addSeries("Eden Used", bmicData.getTimestamps(),
+                bmicData.getEdenUsed());
 
         edenUsedSeries.setLineColor(XChartSeriesColors.BLUE);
         edenUsedSeries.setMarkerColor(Color.LIGHT_GRAY);
         edenUsedSeries.setMarker(SeriesMarkers.DIAMOND);
         edenUsedSeries.setLineStyle(SeriesLines.SOLID);
+
+        validateDataSet(bmicData.getTimestamps(), bmicData.getEdenCommitted());
 
         XYSeries edenCommitted = chart.addSeries("Eden Committed", bmicData.getTimestamps(),
                 bmicData.getEdenCommitted());
@@ -121,9 +141,11 @@ public class BmicPlotter {
         BitmapEncoder.saveBitmap(chart, baseName + "_eden_memory.png", BitmapEncoder.BitmapFormat.PNG);
     }
 
-    private void plotOSMemory(BmicData bmicData) throws IOException {
+    private void plotOSMemory(BmicData bmicData) throws IOException, BmicEmptyDataSet {
         // Create Chart
         XYChart chart = buildCommonChart("OS Memory", "Memory (Megabytes)");
+
+        validateDataSet(bmicData.getTimestamps(), bmicData.getFreeMems());
 
         // Series
         XYSeries edenUsedSeries = chart.addSeries("Free Memory", bmicData.getTimestamps(),
@@ -133,6 +155,8 @@ public class BmicPlotter {
         edenUsedSeries.setMarkerColor(Color.LIGHT_GRAY);
         edenUsedSeries.setMarker(SeriesMarkers.DIAMOND);
         edenUsedSeries.setLineStyle(SeriesLines.SOLID);
+
+        validateDataSet(bmicData.getTimestamps(), bmicData.getSwapFrees());
 
         XYSeries edenCommitted = chart.addSeries("Free Swap", bmicData.getTimestamps(),
                 bmicData.getSwapFrees());
@@ -146,17 +170,22 @@ public class BmicPlotter {
     }
 
 
-    private void plotSurvivorMemory(BmicData bmicData) throws IOException {
+    private void plotSurvivorMemory(BmicData bmicData) throws IOException, BmicEmptyDataSet {
         // Create Chart
         XYChart chart = buildCommonChart("Survivor Memory", "Memory (Megabytes)");
 
+        validateDataSet(bmicData.getTimestamps(), bmicData.getSurvivorUsed());
+
         // Series
-        XYSeries edenUsedSeries = chart.addSeries("Survivor Used", bmicData.getTimestamps(), bmicData.getSurvivorUsed());
+        XYSeries edenUsedSeries = chart.addSeries("Survivor Used", bmicData.getTimestamps(),
+                bmicData.getSurvivorUsed());
 
         edenUsedSeries.setLineColor(XChartSeriesColors.BLUE);
         edenUsedSeries.setMarkerColor(Color.LIGHT_GRAY);
         edenUsedSeries.setMarker(SeriesMarkers.DIAMOND);
         edenUsedSeries.setLineStyle(SeriesLines.SOLID);
+
+        validateDataSet(bmicData.getTimestamps(), bmicData.getSurvivorCommitted());
 
         XYSeries edenCommitted = chart.addSeries("Survivor Committed", bmicData.getTimestamps(),
                 bmicData.getSurvivorCommitted());
@@ -169,17 +198,22 @@ public class BmicPlotter {
         BitmapEncoder.saveBitmap(chart, baseName + "_survivor_memory.png", BitmapEncoder.BitmapFormat.PNG);
     }
 
-    private void plotTenuredMemory(BmicData bmicData) throws IOException {
+    private void plotTenuredMemory(BmicData bmicData) throws IOException, BmicEmptyDataSet {
         // Create Chart
         XYChart chart = buildCommonChart("Tenured Memory", "Memory (Megabytes)");
 
+        validateDataSet(bmicData.getTimestamps(), bmicData.getTenuredUsed());
+
         // Series
-        XYSeries edenUsedSeries = chart.addSeries("Tenured Used", bmicData.getTimestamps(), bmicData.getTenuredUsed());
+        XYSeries edenUsedSeries = chart.addSeries("Tenured Used", bmicData.getTimestamps(),
+                bmicData.getTenuredUsed());
 
         edenUsedSeries.setLineColor(XChartSeriesColors.BLUE);
         edenUsedSeries.setMarkerColor(Color.LIGHT_GRAY);
         edenUsedSeries.setMarker(SeriesMarkers.DIAMOND);
         edenUsedSeries.setLineStyle(SeriesLines.SOLID);
+
+        validateDataSet(bmicData.getTimestamps(), bmicData.getTenuredCommitted());
 
         XYSeries edenCommitted = chart.addSeries("Tenured Committed", bmicData.getTimestamps(),
                 bmicData.getTenuredCommitted());
@@ -192,9 +226,11 @@ public class BmicPlotter {
         BitmapEncoder.saveBitmap(chart, baseName + "_tenured_memory.png", BitmapEncoder.BitmapFormat.PNG);
     }
 
-    private void plotPMMemory(BmicData bmicData) throws IOException {
+    private void plotPMMemory(BmicData bmicData) throws IOException, BmicEmptyDataSet {
         // Create Chart
         XYChart chart = buildCommonChart("PermGen/Metaspace Memory", "Memory (Megabytes)");
+
+        validateDataSet(bmicData.getTimestamps(), bmicData.getPmUsed());
 
         // Series
         XYSeries edenUsedSeries = chart.addSeries("PermGen/Metaspace Used", bmicData.getTimestamps(),
@@ -204,6 +240,8 @@ public class BmicPlotter {
         edenUsedSeries.setMarkerColor(Color.LIGHT_GRAY);
         edenUsedSeries.setMarker(SeriesMarkers.DIAMOND);
         edenUsedSeries.setLineStyle(SeriesLines.SOLID);
+
+        validateDataSet(bmicData.getTimestamps(), bmicData.getPmCommitted());
 
         XYSeries edenCommitted = chart.addSeries("PermGen/Metaspace Committed", bmicData.getTimestamps(),
                 bmicData.getPmCommitted());
@@ -216,9 +254,11 @@ public class BmicPlotter {
         BitmapEncoder.saveBitmap(chart, baseName + "_pm_memory.png", BitmapEncoder.BitmapFormat.PNG);
     }
 
-    private void plotFileDescriptor(BmicData bmicData) throws IOException {
+    private void plotFileDescriptor(BmicData bmicData) throws IOException, BmicEmptyDataSet {
         // Create Chart
         XYChart chart = buildCommonChart("File Descriptors", "Count");
+
+        validateDataSet(bmicData.getTimestamps(), bmicData.getOpenFds());
 
         // Series
         XYSeries edenUsedSeries = chart.addSeries("Open File Descriptors", bmicData.getTimestamps(),
@@ -228,6 +268,8 @@ public class BmicPlotter {
         edenUsedSeries.setMarkerColor(Color.LIGHT_GRAY);
         edenUsedSeries.setMarker(SeriesMarkers.DIAMOND);
         edenUsedSeries.setLineStyle(SeriesLines.SOLID);
+
+        validateDataSet(bmicData.getTimestamps(), bmicData.getFreeFds());
 
         XYSeries edenCommitted = chart.addSeries("Free File Descriptors", bmicData.getTimestamps(),
                 bmicData.getFreeFds());
@@ -240,7 +282,7 @@ public class BmicPlotter {
         BitmapEncoder.saveBitmap(chart, baseName + "_descriptors.png", BitmapEncoder.BitmapFormat.PNG);
     }
 
-    public void plot(BmicData bmicData) throws IOException {
+    public void plot(BmicData bmicData) throws IOException, BmicEmptyDataSet {
         plotQueueData(bmicData);
         plotOSMemory(bmicData);
         plotEdenMemory(bmicData);
