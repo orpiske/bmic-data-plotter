@@ -55,3 +55,12 @@ If you maintain your own Maven repository, you can deploy this library using:
 ```
 mvn deploy -DaltDeploymentRepository=libs-snapshot::default::http://hostname:8081/path/to/libs-snapshot-local
 ```
+
+Samples
+----
+![Eden](doc/broker-jvm-inspector_eden_memory.png)
+![Physical](doc/broker-jvm-inspector_memory.png)
+![PermGen](doc/broker-jvm-inspector_pm_memory.png)
+![Queue Data](doc/broker-jvm-inspector_queue_data.png)
+![Survivor Memory](doc/broker-jvm-inspector_survivor_memory.png)
+![Tenured Memory](doc/broker-jvm-inspector_tenured_memory.png)
