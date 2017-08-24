@@ -141,7 +141,7 @@ public class BmicPlotter {
 
         edenCommitted.setLineColor(XChartSeriesColors.GREEN);
         edenCommitted.setMarkerColor(Color.LIGHT_GRAY);
-        edenCommitted.setMarker(SeriesMarkers.DIAMOND);
+        edenCommitted.setMarker(SeriesMarkers.CIRCLE);
         edenCommitted.setLineStyle(SeriesLines.SOLID);
 
         BitmapEncoder.saveBitmap(chart, baseName + "_eden_memory.png", BitmapEncoder.BitmapFormat.PNG);
@@ -169,7 +169,7 @@ public class BmicPlotter {
 
         edenCommitted.setLineColor(XChartSeriesColors.GREEN);
         edenCommitted.setMarkerColor(Color.LIGHT_GRAY);
-        edenCommitted.setMarker(SeriesMarkers.DIAMOND);
+        edenCommitted.setMarker(SeriesMarkers.CIRCLE);
         edenCommitted.setLineStyle(SeriesLines.SOLID);
 
         BitmapEncoder.saveBitmap(chart, baseName + "_memory.png", BitmapEncoder.BitmapFormat.PNG);
@@ -198,7 +198,7 @@ public class BmicPlotter {
 
         edenCommitted.setLineColor(XChartSeriesColors.GREEN);
         edenCommitted.setMarkerColor(Color.LIGHT_GRAY);
-        edenCommitted.setMarker(SeriesMarkers.DIAMOND);
+        edenCommitted.setMarker(SeriesMarkers.CIRCLE);
         edenCommitted.setLineStyle(SeriesLines.SOLID);
 
         BitmapEncoder.saveBitmap(chart, baseName + "_survivor_memory.png", BitmapEncoder.BitmapFormat.PNG);
@@ -226,7 +226,7 @@ public class BmicPlotter {
 
         edenCommitted.setLineColor(XChartSeriesColors.GREEN);
         edenCommitted.setMarkerColor(Color.LIGHT_GRAY);
-        edenCommitted.setMarker(SeriesMarkers.DIAMOND);
+        edenCommitted.setMarker(SeriesMarkers.CIRCLE);
         edenCommitted.setLineStyle(SeriesLines.SOLID);
 
         BitmapEncoder.saveBitmap(chart, baseName + "_tenured_memory.png", BitmapEncoder.BitmapFormat.PNG);
@@ -254,7 +254,7 @@ public class BmicPlotter {
 
         edenCommitted.setLineColor(XChartSeriesColors.GREEN);
         edenCommitted.setMarkerColor(Color.LIGHT_GRAY);
-        edenCommitted.setMarker(SeriesMarkers.DIAMOND);
+        edenCommitted.setMarker(SeriesMarkers.CIRCLE);
         edenCommitted.setLineStyle(SeriesLines.SOLID);
 
         BitmapEncoder.saveBitmap(chart, baseName + "_pm_memory.png", BitmapEncoder.BitmapFormat.PNG);
@@ -282,7 +282,7 @@ public class BmicPlotter {
 
         edenCommitted.setLineColor(XChartSeriesColors.GREEN);
         edenCommitted.setMarkerColor(Color.LIGHT_GRAY);
-        edenCommitted.setMarker(SeriesMarkers.DIAMOND);
+        edenCommitted.setMarker(SeriesMarkers.CIRCLE);
         edenCommitted.setLineStyle(SeriesLines.SOLID);
 
         BitmapEncoder.saveBitmap(chart, baseName + "_descriptors.png", BitmapEncoder.BitmapFormat.PNG);
