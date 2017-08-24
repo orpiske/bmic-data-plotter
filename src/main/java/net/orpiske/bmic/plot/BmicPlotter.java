@@ -80,6 +80,12 @@ public class BmicPlotter {
         chart.getStyler().setPlotContentSize(.95);
         chart.getStyler().setDatePattern("yyyy-MM-dd HH:mm:ss");
 
+
+        chart.getStyler().setChartTitleFont(new Font("Verdana", Font.BOLD, 14));
+        chart.getStyler().setLegendFont(new Font("Verdana", Font.PLAIN, 12));
+        chart.getStyler().setAxisTitleFont(new Font("Verdana", Font.PLAIN, 12));
+        chart.getStyler().setAxisTickLabelsFont(new Font("Verdana", Font.PLAIN, 10));
+
         return chart;
     }
 
