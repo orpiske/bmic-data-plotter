@@ -54,8 +54,10 @@ Then, the library can be referenced as:
 </dependency>
 ```
 
-**Note**: replace version with the latest available version you wish to use.
+The API documentation (javadoc) is available [here](http://www.orpiske.net/files/javadoc/bmic-data-plotter-1/apidocs/). 
+Additional project documentation is available [here](http://www.orpiske.net/files/javadoc/bmic-data-plotter-1/). 
 
+**Note**: replace version with the latest available version you wish to use.
 
 Output
 ----
