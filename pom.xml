@@ -6,7 +6,14 @@
 
     <groupId>net.orpiske</groupId>
     <artifactId>bmic-data-plotter</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1-SNAPSHOT</version>
+
+    <scm>
+        <developerConnection>scm:git:git@github.com:orpiske/bmic-data-plotter.git</developerConnection>
+        <url>https://github.com/orpiske/bmic-data-plotter</url>
+    </scm>
+
+
 
     <dependencies>
         <dependency>
@@ -115,6 +122,14 @@
                     </plugin>
                 </plugins>
             </build>
+
+            <distributionManagement>
+                <repository>
+                    <id>bintray-orpiske-libs-release</id>
+                    <name>orpiske-libs-release</name>
+                    <url>https://api.bintray.com/maven/orpiske/libs-release/bmic-data-plotter/;publish=1</url>
+                </repository>
+            </distributionManagement>
         </profile>
 
         <profile>
@@ -150,6 +165,7 @@
             </build>
         </profile>
     </profiles>
+
 
 
 </project>
