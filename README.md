@@ -32,11 +32,30 @@ Run:
 Using as Library
 ----
 
-Use:
+To use this project as library on your project you have to add my personal 
+[bintray](https://bintray.com/orpiske/libs-release/) repository to the pom.xml
+file:
 
 ```
-TODO
+<repositories>
+    <repository>
+        <id>orpiske-repo</id>
+        <url>https://dl.bintray.com/orpiske/libs-release</url>
+    </repository>
+</repositories>
 ```
+
+Then, the library can be referenced as: 
+```
+<dependency>
+    <groupId>net.orpiske</groupId>
+    <artifactId>bmic-data-plotter</artifactId>
+    <version>1.0.0</version>
+</dependency>
+```
+
+**Note**: replace version with the latest available version you wish to use.
+
 
 Output
 ----
