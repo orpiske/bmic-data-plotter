@@ -9,7 +9,6 @@
     <scm>
         <developerConnection>scm:git:git@github.com:orpiske/bmic-data-plotter.git</developerConnection>
         <url>https://github.com/orpiske/bmic-data-plotter</url>
-      <tag>HEAD</tag>
   </scm>
 
     <licenses>
