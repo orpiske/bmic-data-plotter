@@ -136,7 +136,7 @@
                             <dependency>
                                 <groupId>org.apache.maven.wagon</groupId>
                                 <artifactId>wagon-ssh</artifactId>
-                                <version>3.0.0</version>
+                                <version>2.12</version>
                             </dependency>
                         </dependencies>
                     </plugin>
@@ -155,12 +155,6 @@
                     <name>orpiske-libs-release</name>
                     <url>https://api.bintray.com/maven/orpiske/libs-release/bmic-data-plotter/;publish=1</url>
                 </repository>
-
-                <site>
-                    <id>orpiske.net</id>
-                    <name>SDM</name>
-                    <url>${orpiske.site}/files/javadoc/bmic-data-plotter-1</url>
-                </site>
             </distributionManagement>
         </profile>
 
@@ -195,6 +189,48 @@
                     </plugin>
                 </plugins>
             </build>
+        </profile>
+
+        <profile>
+            <id>Site</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-site-plugin</artifactId>
+                        <version>3.6</version>
+                        <dependencies>
+                            <dependency>
+                                <groupId>org.apache.maven.wagon</groupId>
+                                <artifactId>wagon-ssh</artifactId>
+                                <version>3.0.0</version>
+                            </dependency>
+                        </dependencies>
+                    </plugin>
+                </plugins>
+            </build>
+
+            <distributionManagement>
+                <site>
+                    <id>orpiske.net</id>
+                    <name>SDM</name>
+                    <url>${orpiske.site}/files/javadoc/bmic-data-plotter-1</url>
+                </site>
+            </distributionManagement>
+
+            <reporting>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>3.0.0-M1</version>
+                    </plugin>
+                </plugins>
+            </reporting>
+
         </profile>
     </profiles>
 
