@@ -154,7 +154,7 @@
                 <site>
                     <id>orpiske.net</id>
                     <name>SDM</name>
-                    <url>${orpiske.site}/files/javadoc/bmic-data-plotter-${pom.version}</url>
+                    <url>${orpiske.site}/files/javadoc/bmic-data-plotter-1</url>
                 </site>
             </distributionManagement>
         </profile>
