@@ -13,6 +13,14 @@
         <url>https://github.com/orpiske/bmic-data-plotter</url>
     </scm>
 
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>manual</distribution>
+            <comments>A business-friendly OSS license</comments>
+        </license>
+    </licenses>
 
 
     <dependencies>
@@ -120,6 +128,19 @@
                             </execution>
                         </executions>
                     </plugin>
+
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-site-plugin</artifactId>
+                        <version>3.6</version>
+                        <dependencies>
+                            <dependency>
+                                <groupId>org.apache.maven.wagon</groupId>
+                                <artifactId>wagon-ssh</artifactId>
+                                <version>3.0.0</version>
+                            </dependency>
+                        </dependencies>
+                    </plugin>
                 </plugins>
             </build>
 
@@ -129,6 +150,12 @@
                     <name>orpiske-libs-release</name>
                     <url>https://api.bintray.com/maven/orpiske/libs-release/bmic-data-plotter/;publish=1</url>
                 </repository>
+
+                <site>
+                    <id>orpiske.net</id>
+                    <name>SDM</name>
+                    <url>${orpiske.site}/files/javadoc/bmic-data-plotter-${pom.version}</url>
+                </site>
             </distributionManagement>
         </profile>
 
@@ -166,6 +193,13 @@
         </profile>
     </profiles>
 
-
-
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.0.0-M1</version>
+            </plugin>
+        </plugins>
+    </reporting>
 </project>
