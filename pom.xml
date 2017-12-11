@@ -4,12 +4,12 @@
 
     <groupId>net.orpiske</groupId>
     <artifactId>bmic-data-plotter</artifactId>
-    <version>1.0.4</version>
+    <version>1.0.5-SNAPSHOT</version>
 
     <scm>
         <developerConnection>scm:git:git@github.com:orpiske/bmic-data-plotter.git</developerConnection>
         <url>https://github.com/orpiske/bmic-data-plotter</url>
-    <tag>bmic-data-plotter-1.0.4</tag>
+    <tag>HEAD</tag>
   </scm>
 
     <licenses>
