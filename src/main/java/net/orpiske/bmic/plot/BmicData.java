@@ -16,149 +16,233 @@
 
 package net.orpiske.bmic.plot;
 
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
+// TODO: lots of duplicated code here that can be removed
+
+/**
+ * Bmic data container
+ */
 public class BmicData {
-    private List<Date> timestamps = new LinkedList<>();
-    private List<Double> loadValues = new LinkedList<>();
-    private List<Integer> openFds = new LinkedList<>();
-    private List<Integer> freeFds = new LinkedList<>();
-    private List<Integer> freeMems = new LinkedList<>();
-    private List<Integer> swapFrees = new LinkedList<>();
-    private List<Integer> swapCommitteds = new LinkedList<>();
-    private List<Integer> edenInitial = new LinkedList<>();
-    private List<Integer> edenCommitted = new LinkedList<>();
-    private List<Integer> edenMax = new LinkedList<>();
-    private List<Integer> edenUsed = new LinkedList<>();
+    private Set<BmicRecord> bmicRecordSet = new TreeSet<>();
 
-    private List<Integer> survivorInitial = new LinkedList<>();
-    private List<Integer> survivorCommitted = new LinkedList<>();
-    private List<Integer> survivorMax = new LinkedList<>();
-    private List<Integer> survivorUsed = new LinkedList<>();
-
-    private List<Integer> tenuredInitial = new LinkedList<>();
-    private List<Integer> tenuredCommitted = new LinkedList<>();
-    private List<Integer> tenuredMax = new LinkedList<>();
-    private List<Integer> tenuredUsed = new LinkedList<>();
-
-    private List<Integer> pmInitial = new LinkedList<>();
-    private List<Integer> pmCommitted = new LinkedList<>();
-    private List<Integer> pmMax = new LinkedList<>();
-    private List<Integer> pmUsed = new LinkedList<>();
-
-
-    private List<Integer> queueSizes = new LinkedList<>();
-    private List<Integer> consumers = new LinkedList<>();
-    private List<Integer> ack = new LinkedList<>();
-    private List<Integer> exp = new LinkedList<>();
+    public void add(BmicRecord record) {
+        bmicRecordSet.add(record);
+    }
 
     public List<Date> getTimestamps() {
-        return timestamps;
+        List<Date> list = new LinkedList<>();
+
+        bmicRecordSet.stream().forEach(item->list.add(item.getTimestamp()));
+
+        return list;
     }
 
     public List<Integer> getQueueSizes() {
-        return queueSizes;
+        List<Integer> list = new LinkedList<>();
+
+        bmicRecordSet.stream().forEach(item->list.add(item.getQueueSize()));
+
+        return list;
     }
 
     public List<Double> getLoadValues() {
-        return loadValues;
+        List<Double> list = new LinkedList<>();
+
+        bmicRecordSet.stream().forEach(item->list.add(item.getLoadValue()));
+
+        return list;
     }
 
     public List<Integer> getOpenFds() {
-        return openFds;
+        List<Integer> list = new LinkedList<>();
+
+        bmicRecordSet.stream().forEach(item->list.add(item.getOpenFds()));
+
+        return list;
     }
 
     public List<Integer> getFreeFds() {
-        return freeFds;
+        List<Integer> list = new LinkedList<>();
+
+        bmicRecordSet.stream().forEach(item->list.add(item.getFreeFds()));
+
+        return list;
     }
 
     public List<Integer> getFreeMems() {
-        return freeMems;
+        List<Integer> list = new LinkedList<>();
+
+        bmicRecordSet.stream().forEach(item->list.add(item.getFreeMem()));
+
+        return list;
     }
 
     public List<Integer> getSwapFrees() {
-        return swapFrees;
+        List<Integer> list = new LinkedList<>();
+
+        bmicRecordSet.stream().forEach(item->list.add(item.getSwapFree()));
+
+        return list;
     }
 
     public List<Integer> getSwapCommitteds() {
-        return swapCommitteds;
+        List<Integer> list = new LinkedList<>();
+
+        bmicRecordSet.stream().forEach(item->list.add(item.getSwapCommitted()));
+
+        return list;
     }
 
     public List<Integer> getEdenInitial() {
-        return edenInitial;
+        List<Integer> list = new LinkedList<>();
+
+        bmicRecordSet.stream().forEach(item->list.add(item.getEdenInitial()));
+
+        return list;
     }
 
     public List<Integer> getEdenCommitted() {
-        return edenCommitted;
+        List<Integer> list = new LinkedList<>();
+
+        bmicRecordSet.stream().forEach(item->list.add(item.getEdenCommitted()));
+
+        return list;
     }
 
     public List<Integer> getEdenMax() {
-        return edenMax;
+        List<Integer> list = new LinkedList<>();
+
+        bmicRecordSet.stream().forEach(item->list.add(item.getEdenMax()));
+
+        return list;
     }
 
     public List<Integer> getEdenUsed() {
-        return edenUsed;
+        List<Integer> list = new LinkedList<>();
+
+        bmicRecordSet.stream().forEach(item->list.add(item.getEdenUsed()));
+
+        return list;
     }
 
     public List<Integer> getSurvivorInitial() {
-        return survivorInitial;
+        List<Integer> list = new LinkedList<>();
+
+        bmicRecordSet.stream().forEach(item->list.add(item.getSurvivorInitial()));
+
+        return list;
     }
 
     public List<Integer> getSurvivorCommitted() {
-        return survivorCommitted;
+        List<Integer> list = new LinkedList<>();
+
+        bmicRecordSet.stream().forEach(item->list.add(item.getSurvivorCommitted()));
+
+        return list;
     }
 
     public List<Integer> getSurvivorMax() {
-        return survivorMax;
+        List<Integer> list = new LinkedList<>();
+
+        bmicRecordSet.stream().forEach(item->list.add(item.getSurvivorMax()));
+
+        return list;
     }
 
     public List<Integer> getSurvivorUsed() {
-        return survivorUsed;
+        List<Integer> list = new LinkedList<>();
+
+        bmicRecordSet.stream().forEach(item->list.add(item.getSurvivorUsed()));
+
+        return list;
     }
 
     public List<Integer> getTenuredInitial() {
-        return tenuredInitial;
+        List<Integer> list = new LinkedList<>();
+
+        bmicRecordSet.stream().forEach(item->list.add(item.getTenuredInitial()));
+
+        return list;
     }
 
     public List<Integer> getTenuredCommitted() {
-        return tenuredCommitted;
+        List<Integer> list = new LinkedList<>();
+
+        bmicRecordSet.stream().forEach(item->list.add(item.getTenuredCommitted()));
+
+        return list;
     }
 
     public List<Integer> getTenuredMax() {
-        return tenuredMax;
+        List<Integer> list = new LinkedList<>();
+
+        bmicRecordSet.stream().forEach(item->list.add(item.getTenuredMax()));
+
+        return list;
     }
 
     public List<Integer> getTenuredUsed() {
-        return tenuredUsed;
+        List<Integer> list = new LinkedList<>();
+
+        bmicRecordSet.stream().forEach(item->list.add(item.getTenuredUsed()));
+
+        return list;
     }
 
     public List<Integer> getPmInitial() {
-        return pmInitial;
+        List<Integer> list = new LinkedList<>();
+
+        bmicRecordSet.stream().forEach(item->list.add(item.getPmInitial()));
+
+        return list;
     }
 
     public List<Integer> getPmCommitted() {
-        return pmCommitted;
+        List<Integer> list = new LinkedList<>();
+
+        bmicRecordSet.stream().forEach(item->list.add(item.getPmCommitted()));
+
+        return list;
     }
 
-    public List<Integer> getPmMax() {
-        return pmMax;
+    public List<Long> getPmMax() {
+        List<Long> list = new LinkedList<>();
+
+        bmicRecordSet.stream().forEach(item->list.add(item.getPmMax()));
+
+        return list;
     }
 
     public List<Integer> getPmUsed() {
-        return pmUsed;
+        List<Integer> list = new LinkedList<>();
+
+        bmicRecordSet.stream().forEach(item->list.add(item.getPmUsed()));
+
+        return list;
     }
 
     public List<Integer> getConsumers() {
-        return consumers;
+        List<Integer> list = new LinkedList<>();
+
+        bmicRecordSet.stream().forEach(item->list.add(item.getConsumer()));
+
+        return list;
     }
 
     public List<Integer> getAck() {
-        return ack;
+        List<Integer> list = new LinkedList<>();
+
+        bmicRecordSet.stream().forEach(item->list.add(item.getAck()));
+
+        return list;
     }
 
     public List<Integer> getExp() {
-        return exp;
+        List<Integer> list = new LinkedList<>();
+
+        bmicRecordSet.stream().forEach(item->list.add(item.getExp()));
+
+        return list;
     }
 }

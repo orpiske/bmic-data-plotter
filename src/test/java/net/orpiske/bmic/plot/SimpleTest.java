@@ -35,7 +35,7 @@ public class SimpleTest {
     }
 
     @Test
-    public void testPlotReceiverRate() throws Exception {
+    public void testPlotWellFormed() throws Exception {
         String fileName = this.getClass().getResource("broker-jvm-inspector-ok.csv.gz").getPath();
 
         plot(fileName);
@@ -47,5 +47,21 @@ public class SimpleTest {
                 "broker-jvm-inspector-ok_memory.png", "broker-jvm-inspector-ok_pm_memory.png",
                 "broker-jvm-inspector-ok_survivor_memory.png", "broker-jvm-inspector-ok_queue_data.png",
                 "broker-jvm-inspector-ok_eden_memory.png"));
+    }
+
+
+    @Test
+    public void testPlotMalformed() throws Exception {
+        String fileName = this.getClass().getResource("broker-jvm-inspector-malformed.csv.gz").getPath();
+
+        plot(fileName);
+
+        File baseDir = new File(fileName).getParentFile();
+
+        validatePlotFile(baseDir,
+                Arrays.asList("broker-jvm-inspector-malformed_tenured_memory.png",
+                        "broker-jvm-inspector-malformed_memory.png", "broker-jvm-inspector-malformed_pm_memory.png",
+                        "broker-jvm-inspector-malformed_survivor_memory.png", "broker-jvm-inspector-malformed_queue_data.png",
+                        "broker-jvm-inspector-malformed_eden_memory.png"));
     }
 }

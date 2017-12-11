@@ -24,14 +24,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.zip.GZIPInputStream;
 
 public class BmicReader {
     private static final Logger logger = LoggerFactory.getLogger(BmicReader.class);
-
 
     public BmicData read(String filename) throws IOException {
         InputStream fileStream = null;
@@ -42,7 +40,7 @@ public class BmicReader {
 
         try {
             fileStream = new FileInputStream(filename);
-            gzipStream= new GZIPInputStream(fileStream);
+            gzipStream = new GZIPInputStream(fileStream);
 
             in = new InputStreamReader(gzipStream);
 
@@ -61,38 +59,39 @@ public class BmicReader {
                 Date timeStamp = null;
                 try {
                     timeStamp = formatter.parse(record.get(0));
-                    bmicData.getTimestamps().add(timeStamp);
+                    BmicRecord bmicRecord = new BmicRecord();
+                    bmicRecord.setTimestamp(timeStamp);
 
-                    bmicData.getLoadValues().add(Double.parseDouble(record.get(1)));
-                    bmicData.getOpenFds().add(Integer.parseInt(record.get(2)));
-                    bmicData.getFreeFds().add(Integer.parseInt(record.get(3)));
-                    bmicData.getFreeMems().add(Integer.parseInt(record.get(4)));
-                    bmicData.getSwapFrees().add(Integer.parseInt(record.get(5)));
-                    bmicData.getSwapCommitteds().add(Integer.parseInt(record.get(6)));
-                    bmicData.getEdenInitial().add(Integer.parseInt(record.get(7)));
-                    bmicData.getEdenCommitted().add(Integer.parseInt(record.get(8)));
-                    bmicData.getEdenMax().add(Integer.parseInt(record.get(9)));
-                    bmicData.getEdenUsed().add(Integer.parseInt(record.get(10)));
-                    bmicData.getSurvivorInitial().add(Integer.parseInt(record.get(11)));
-                    bmicData.getSurvivorCommitted().add(Integer.parseInt(record.get(12)));
-                    bmicData.getSurvivorMax().add(Integer.parseInt(record.get(13)));
-                    bmicData.getSurvivorUsed().add(Integer.parseInt(record.get(14)));
-                    bmicData.getTenuredInitial().add(Integer.parseInt(record.get(15)));
-                    bmicData.getTenuredCommitted().add(Integer.parseInt(record.get(16)));
-                    bmicData.getTenuredMax().add(Integer.parseInt(record.get(17)));
-                    bmicData.getTenuredUsed().add(Integer.parseInt(record.get(18)));
-                    bmicData.getPmInitial().add(Integer.parseInt(record.get(19)));
-                    bmicData.getPmCommitted().add(Integer.parseInt(record.get(20)));
+                    bmicRecord.setLoadValue(Double.parseDouble(record.get(1)));
+                    bmicRecord.setOpenFds(Integer.parseInt(record.get(2)));
+                    bmicRecord.setFreeFds(Integer.parseInt(record.get(3)));
+                    bmicRecord.setFreeMem(Integer.parseInt(record.get(4)));
+                    bmicRecord.setSwapFree(Integer.parseInt(record.get(5)));
+                    bmicRecord.setSwapCommitted(Integer.parseInt(record.get(6)));
+                    bmicRecord.setEdenInitial(Integer.parseInt(record.get(7)));
+                    bmicRecord.setEdenCommitted(Integer.parseInt(record.get(8)));
+                    bmicRecord.setEdenMax(Integer.parseInt(record.get(9)));
+                    bmicRecord.setEdenUsed(Integer.parseInt(record.get(10)));
+                    bmicRecord.setSurvivorInitial(Integer.parseInt(record.get(11)));
+                    bmicRecord.setSurvivorCommitted(Integer.parseInt(record.get(12)));
+                    bmicRecord.setSurvivorMax(Integer.parseInt(record.get(13)));
+                    bmicRecord.setSurvivorUsed(Integer.parseInt(record.get(14)));
+                    bmicRecord.setTenuredInitial(Integer.parseInt(record.get(15)));
+                    bmicRecord.setTenuredCommitted(Integer.parseInt(record.get(16)));
+                    bmicRecord.setTenuredMax(Integer.parseInt(record.get(17)));
+                    bmicRecord.setTenuredUsed(Integer.parseInt(record.get(18)));
+                    bmicRecord.setPmInitial(Integer.parseInt(record.get(19)));
+                    bmicRecord.setPmCommitted(Integer.parseInt(record.get(20)));
+                    bmicRecord.setPmMax(Long.parseLong(record.get(21)));
+                    bmicRecord.setPmUsed(Integer.parseInt(record.get(22)));
+                    bmicRecord.setQueueSize(Integer.parseInt(record.get(23)));
+                    bmicRecord.setConsumer(Integer.parseInt(record.get(23)));
+                    bmicRecord.setAck(Integer.parseInt(record.get(25)));
+                    bmicRecord.setExp(Integer.parseInt(record.get(26)));
 
-                    // TODO: fix
-                    // bmicData.getPmMax().add(Integer.parseInt(record.get(21)));
-                    bmicData.getPmUsed().add(Integer.parseInt(record.get(22)));
-                    bmicData.getQueueSizes().add(Integer.parseInt(record.get(23)));
-                    bmicData.getConsumers().add(Integer.parseInt(record.get(23)));
-                    bmicData.getAck().add(Integer.parseInt(record.get(25)));
-                    bmicData.getExp().add(Integer.parseInt(record.get(26)));
-                } catch (ParseException e) {
-                    logger.warn("Unable to parse record: {}", e.getMessage(), e);
+                    bmicData.add(bmicRecord);
+                } catch (Throwable t) {
+                    logger.warn("Unable to parse record: {}", t.getMessage(), t);
                     continue;
                 }
             }
