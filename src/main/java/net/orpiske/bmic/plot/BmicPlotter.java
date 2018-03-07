@@ -28,22 +28,17 @@ import org.knowm.xchart.style.markers.SeriesMarkers;
 
 import java.awt.*;
 import java.io.IOException;
-import java.util.Date;
 import java.util.List;
 
 @SuppressWarnings("SpellCheckingInspection")
-public class BmicPlotter {
+public class BmicPlotter extends AbstractBmicPlotter {
     private String baseName;
-
-    private int outputWidth = 1200;
-    private int outputHeight = 700;
-    private boolean plotGridLinesVisible = true;
 
     public BmicPlotter(final String baseName) {
         this.baseName = baseName;
     }
 
-    private void validateDataSet(List<?> xData, List<?> yData) throws BmicEmptyDataSet {
+    protected void validateDataSet(final List<?> xData, final List<?> yData) throws BmicEmptyDataSet {
         if (xData == null || xData.size() == 0) {
             throw new BmicEmptyDataSet("The 'X' column data set is empty");
         }
@@ -51,46 +46,10 @@ public class BmicPlotter {
         if (yData == null || yData.size() == 0) {
             throw new BmicEmptyDataSet("The 'Y' column data set is empty");
         }
-
-    }
-
-    private XYChart buildCommonChart(String title, String yTitle) {
-
-        // Create Chart
-        XYChart chart = new XYChartBuilder()
-                .width(outputWidth)
-                .height(outputHeight)
-                .title(title)
-                .xAxisTitle("Time")
-                .yAxisTitle(yTitle)
-                .build();
-
-        chart.getStyler().setPlotBackgroundColor(ChartColor.getAWTColor(ChartColor.WHITE));
-        chart.getStyler().setChartBackgroundColor(Color.WHITE);
-        chart.getStyler().setChartTitleBoxBackgroundColor(new Color(0, 222, 0));
-
-        chart.getStyler().setPlotGridLinesVisible(plotGridLinesVisible);
-
-        chart.getStyler().setYAxisTickMarkSpacingHint(15);
-
-        chart.getStyler().setXAxisLabelRotation(45);
-
-        chart.getStyler().setAxisTickMarkLength(15);
-        chart.getStyler().setPlotMargin(0);
-        chart.getStyler().setPlotContentSize(.95);
-        chart.getStyler().setDatePattern("yyyy-MM-dd HH:mm:ss");
-
-
-        chart.getStyler().setChartTitleFont(new Font("Verdana", Font.BOLD, 14));
-        chart.getStyler().setLegendFont(new Font("Verdana", Font.PLAIN, 12));
-        chart.getStyler().setAxisTitleFont(new Font("Verdana", Font.PLAIN, 12));
-        chart.getStyler().setAxisTickLabelsFont(new Font("Verdana", Font.PLAIN, 10));
-
-        return chart;
     }
 
 
-    private void plotQueueData(BmicData bmicData) throws IOException, BmicEmptyDataSet {
+    protected void plotQueueData(final BmicData bmicData) throws IOException, BmicEmptyDataSet {
         // Create Chart
         XYChart chart = buildCommonChart("Queue Size", "Number of messages");
 
@@ -119,7 +78,7 @@ public class BmicPlotter {
     }
 
 
-    private void plotEdenMemory(BmicData bmicData) throws IOException, BmicEmptyDataSet {
+    protected void plotEdenMemory(final BmicData bmicData) throws IOException, BmicEmptyDataSet {
         // Create Chart
         XYChart chart = buildCommonChart("Eden Memory", "Memory (Megabytes)");
 
@@ -147,7 +106,7 @@ public class BmicPlotter {
         BitmapEncoder.saveBitmap(chart, baseName + "_eden_memory.png", BitmapEncoder.BitmapFormat.PNG);
     }
 
-    private void plotOSMemory(BmicData bmicData) throws IOException, BmicEmptyDataSet {
+    protected void plotOSMemory(final BmicData bmicData) throws IOException, BmicEmptyDataSet {
         // Create Chart
         XYChart chart = buildCommonChart("OS Memory", "Memory (Megabytes)");
 
@@ -176,7 +135,7 @@ public class BmicPlotter {
     }
 
 
-    private void plotSurvivorMemory(BmicData bmicData) throws IOException, BmicEmptyDataSet {
+    protected void plotSurvivorMemory(final BmicData bmicData) throws IOException, BmicEmptyDataSet {
         // Create Chart
         XYChart chart = buildCommonChart("Survivor Memory", "Memory (Megabytes)");
 
@@ -204,7 +163,7 @@ public class BmicPlotter {
         BitmapEncoder.saveBitmap(chart, baseName + "_survivor_memory.png", BitmapEncoder.BitmapFormat.PNG);
     }
 
-    private void plotTenuredMemory(BmicData bmicData) throws IOException, BmicEmptyDataSet {
+    protected void plotTenuredMemory(final BmicData bmicData) throws IOException, BmicEmptyDataSet {
         // Create Chart
         XYChart chart = buildCommonChart("Tenured Memory", "Memory (Megabytes)");
 
@@ -232,7 +191,7 @@ public class BmicPlotter {
         BitmapEncoder.saveBitmap(chart, baseName + "_tenured_memory.png", BitmapEncoder.BitmapFormat.PNG);
     }
 
-    private void plotPMMemory(BmicData bmicData) throws IOException, BmicEmptyDataSet {
+    protected void plotPMMemory(final BmicData bmicData) throws IOException, BmicEmptyDataSet {
         // Create Chart
         XYChart chart = buildCommonChart("PermGen/Metaspace Memory", "Memory (Megabytes)");
 
@@ -260,7 +219,7 @@ public class BmicPlotter {
         BitmapEncoder.saveBitmap(chart, baseName + "_pm_memory.png", BitmapEncoder.BitmapFormat.PNG);
     }
 
-    private void plotFileDescriptor(BmicData bmicData) throws IOException, BmicEmptyDataSet {
+    protected void plotFileDescriptor(final BmicData bmicData) throws IOException, BmicEmptyDataSet {
         // Create Chart
         XYChart chart = buildCommonChart("File Descriptors", "Count");
 
@@ -288,24 +247,12 @@ public class BmicPlotter {
         BitmapEncoder.saveBitmap(chart, baseName + "_descriptors.png", BitmapEncoder.BitmapFormat.PNG);
     }
 
-    public void plot(BmicData bmicData) throws IOException, BmicEmptyDataSet {
+    public void plot(final BmicData bmicData) throws IOException, BmicEmptyDataSet {
         plotQueueData(bmicData);
         plotOSMemory(bmicData);
         plotEdenMemory(bmicData);
         plotSurvivorMemory(bmicData);
         plotTenuredMemory(bmicData);
         plotPMMemory(bmicData);
-    }
-
-    public void setOutputWidth(int outputWidth) {
-        this.outputWidth = outputWidth;
-    }
-
-    public void setOutputHeight(int outputHeight) {
-        this.outputHeight = outputHeight;
-    }
-
-    public void setPlotGridLinesVisible(boolean plotGridLinesVisible) {
-        this.plotGridLinesVisible = plotGridLinesVisible;
     }
 }
